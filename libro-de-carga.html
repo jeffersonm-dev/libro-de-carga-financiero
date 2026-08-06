@@ -830,46 +830,9 @@ function parseWorkbookFromBase64(base64){
   catch(e){ console.warn('No se pudo parsear el archivo', e); return null; }
 }
 function renderPreviewBlock(report, containerId){
-  try {
-    const el = document.getElementById(containerId);
-    if(!el) return;
-    if(!report.file || !report.file.base64){ el.innerHTML=''; return; }
-    el.innerHTML = `<div class="empty-state"><p>Preparando vista previa…</p></div>`;
-    setTimeout(() => {
-      try {
-        const wb = parseWorkbookFromBase64(report.file.base64);
-        if(!wb || !wb.SheetNames || !wb.SheetNames.length){
-          el.innerHTML = `<div class="empty-state"><p>Archivo adjunto recibido. Puedes descargarlo directamente para revisar su contenido.</p></div>`;
-          return;
-        }
-        if(previewSheetIndex >= wb.SheetNames.length) previewSheetIndex = 0;
-        const sheetName = wb.SheetNames[previewSheetIndex];
-        const ws = wb.Sheets[sheetName];
-        const rows = XLSX.utils.sheet_to_json(ws, { header:1, defval:'', raw:false });
-        const limitedRows = rows.slice(0,200);
-        const maxCols = Math.min(20, limitedRows.reduce((m,r)=>Math.max(m,r.length),0));
-        el.innerHTML = `
-          <div class="preview-tabs" id="previewTabs">
-            ${wb.SheetNames.map((n,i)=>`<button class="preview-tab ${i===previewSheetIndex?'active':''}" data-sheet="${i}">${escapeHtml(n)}</button>`).join('')}
-          </div>
-          <div class="preview-scroll"><table class="preview-table"><tbody>
-            ${limitedRows.map((r,ri)=>`<tr><td class="rownum">${ri+1}</td>${Array.from({length:maxCols}).map((_,ci)=>`<td>${escapeHtml(r[ci]??'')}</td>`).join('')}</tr>`).join('')}
-          </tbody></table></div>
-          ${rows.length>200?`<div style="font-size:11.5px;color:var(--text-faint);margin-top:8px;">Mostrando las primeras 200 filas de ${rows.length}.</div>`:''}
-        `;
-        el.querySelectorAll('[data-sheet]').forEach(btn=>{
-          btn.addEventListener('click', ()=>{ previewSheetIndex=parseInt(btn.dataset.sheet,10); renderPreviewBlock(report, containerId); });
-        });
-      } catch(err) {
-        console.warn('Error en la vista previa interna:', err);
-        el.innerHTML = `<div class="empty-state"><p>No se pudo generar la vista previa. Descarga el archivo para revisarlo.</p></div>`;
-      }
-    }, 10);
-  } catch(e) {
-    console.warn('Error en la vista previa:', e);
-    const el = document.getElementById(containerId);
-    if(el) el.innerHTML = `<div class="empty-state"><p>El archivo de soporte se encuentra guardado y disponible para su descarga.</p></div>`;
-  }
+  const el = document.getElementById(containerId);
+  if(!el) return;
+  el.innerHTML = `<div class="empty-state"><p>La vista previa de Excel está deshabilitada para evitar bloqueos.</p></div>`;
 }
 
 /* =========================================================================
