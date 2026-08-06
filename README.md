@@ -1,0 +1,56 @@
+# Libro de Carga · Control Financiero de Estaciones de Servicio
+
+Sistema web interactivo y multiempresa diseñado para el **Control Financiero y Carga de Reportes de Flujo de Caja** en estaciones de servicio y empresas del sector energético.
+
+---
+
+## 📋 ¿De qué se trata este sistema?
+
+Este sistema permite administrar y supervisar los reportes financieros mensuales de múltiples estaciones de servicio o empresas asociadas.
+
+### Funcionalidades Principales:
+
+1. **Panel de Empresas (Operadores)**:
+   - **Carga de Archivos Excel/CSV**: Subida drag-and-drop de archivos `.xlsx`, `.xls`, `.xlsm` y `.csv` de hasta 8 MB por período (Mes/Año).
+   - **Vista Previa de Excel Interactiva**: Lectura instantánea en el navegador utilizando SheetJS con navegación por pestañas de hojas del libro.
+   - **Resumen Financiero y Calculadora de Flujo Neto**: Registro de Ingresos, Gastos, Costos y Saldo en Banco/Caja con cálculo en tiempo real de Superávit o Déficit del período.
+   - **Notas para Administración**: Espacio para observaciones o aclaraciones sobre el reporte mensual.
+   - **Historial de Reportes**: Consulta de cargas pasadas con filtros por mes y año.
+
+2. **Panel del Super Administrador**:
+   - **Estadísticas Visuales y Gráficos**: Barra de progreso de cumplimiento de carga (Validados %, Cargados %, Sin Cargar %) con indicadores porcentuales en tiempo real.
+   - **Filtros Avanzados**: Filtrado combinado por **Empresa**, **Estado de Datos Cargados** (Todos, Sí, No), **Mes** y **Año**.
+   - **Auditoría Detallada**: Visualización de la columna **Quién Cargó** (operador registrado) y la **Extensión del Archivo** (`.XLSX`, `.CSV`, etc.).
+   - **Flujo de Validación**: Revisión de archivos, notas de la empresa y opciones para **Validar Reporte** o **Devolver / Reabrir** con notas del administrador.
+   - **Gestión de Empresas y Usuarios**: Creación de nuevas empresas con credenciales de acceso, restablecimiento de contraseñas y eliminación de registros.
+
+---
+
+## 🔑 Credenciales Grabadas en el Sistema
+
+El sistema cuenta con datos iniciales predeterminados (*seeded*) guardados localmente. Puedes ingresar con cualquiera de las siguientes cuentas:
+
+| Rol | Empresa / Estación | Usuario (`Username`) | Contraseña (`Password`) |
+| :--- | :--- | :--- | :--- |
+| **Super Administrador** | Administración General | `superadmin` | `super123` |
+| **Empresa (Operador)** | AGROGASOIL, C.A. | `agrogasoil` | `agro123` |
+| **Empresa (Operador)** | Aportes Portuguesa de Oro | `portuguesa` | `port123` |
+| **Empresa (Operador)** | Aportes Puerta del Llano | `puertallano` | `llano123` |
+
+> **Nota**: El Super Administrador puede crear nuevas empresas o restablecer la contraseña de cualquier usuario desde el módulo **"Empresas y Usuarios"**.
+
+---
+
+## 🚀 ¿Cómo Ejecutar el Sistema?
+
+1. No requiere instalación de servidores ni bases de datos externas.
+2. Abre el archivo **`libro-de-carga.html`** directamente en cualquier navegador web moderno (Google Chrome, Microsoft Edge, Firefox, Safari, Brave).
+3. Toda la información y archivos cargados se almacenan de manera segura en el `localStorage` del navegador.
+
+---
+
+## ⚙️ Tecnologías Utilizadas
+
+- **HTML5 & CSS3 Vanilla**: Diseño responsivo con sistema de variables CSS, glassmorphism, sombras suaves y degradados.
+- **JavaScript (ES6+)**: Lógica reactiva de estado sin dependencias pesadas.
+- **SheetJS (xlsx.full.min.js)**: Decodificación y renderizado de hojas de cálculo Excel directamente en el cliente.
