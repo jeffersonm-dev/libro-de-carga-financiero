@@ -74,7 +74,6 @@ svg{display:block;}
 .field input:focus{border-color:var(--blue);box-shadow:0 0 0 3px var(--blue-soft);background:#fff;}
 
 .field select, .field-row select, .filter-group select{
-  width:100%;
   background-color:#FFFFFF;
   border:1px solid var(--border);
   color:var(--text);
@@ -92,6 +91,7 @@ svg{display:block;}
   box-shadow:0 1px 3px rgba(38,36,31,.04);
   transition:border-color .15s ease, box-shadow .15s ease, background-color .15s ease;
 }
+.filter-group select{width:auto;flex:1 1 180px;min-width:150px;}
 .field select:hover, .field-row select:hover, .filter-group select:hover{border-color:#D4CEBF;background-color:#FDFCF9;}
 .field select:focus, .field-row select:focus, .filter-group select:focus{border-color:var(--blue);box-shadow:0 0 0 3px var(--blue-soft);background-color:#FFFFFF;}
 
@@ -1487,7 +1487,7 @@ function renderAdminChecklist(){
         <div class="panel-title">Checklist de Cumplimiento (Control de Carga)</div>
         <div class="panel-sub">Verificación de recepción de reportes Excel y validaciones para ${periodoLabel(p)}.</div>
       </div>
-      ${periodSelectHTML('check')}
+      ${filterSelectHTML(true, true)}
     </div>
 
     <div class="kpi-row">
@@ -1516,7 +1516,7 @@ function renderAdminChecklist(){
     </div>
   `;
 
-  bindPeriodSelect('check', ()=>{ renderAdminChecklist(); });
+  bindFilterSelect(()=>renderAdminChecklist(), true, true);
 
   const tbody = document.getElementById('checklistRows');
   if(!DB.companies.length){
@@ -1525,7 +1525,11 @@ function renderAdminChecklist(){
   }
 
   DB.companies.forEach(c=>{
+    if(filterEmpresa !== 'todas' && c.id !== filterEmpresa) return;
     const r = getReport(c.id, p, false) || blankReport(c.id, p);
+    const isLoaded = r.status !== 'borrador' || !!r.file;
+    if(filterCargado === 'si' && !isLoaded) return;
+    if(filterCargado === 'no' && isLoaded) return;
     const ext = r.file ? getFileExt(r.file.name) : '';
     
     let estadoBadge = '';
