@@ -70,8 +70,31 @@ svg{display:block;}
 .login-card .sub{color:var(--text-dim);font-size:13.5px;margin-bottom:26px;line-height:1.55;}
 .field{margin-bottom:16px;}
 .field label{display:block;font-size:12.5px;color:var(--text-dim);margin-bottom:7px;font-weight:500;}
-.field input, .field select{width:100%;background:#FBF9F5;border:1px solid var(--border);color:var(--text);padding:11px 13px;border-radius:10px;font-size:14.5px;outline:none;transition:border-color .15s, box-shadow .15s;}
-.field input:focus, .field select:focus{border-color:var(--blue);box-shadow:0 0 0 3px var(--blue-soft);background:#fff;}
+.field input{width:100%;background:#FBF9F5;border:1px solid var(--border);color:var(--text);padding:11px 13px;border-radius:10px;font-size:14.5px;outline:none;transition:border-color .15s, box-shadow .15s;}
+.field input:focus{border-color:var(--blue);box-shadow:0 0 0 3px var(--blue-soft);background:#fff;}
+
+.field select, .field-row select, .filter-group select{
+  width:100%;
+  background-color:#FFFFFF;
+  border:1px solid var(--border);
+  color:var(--text);
+  padding:10px 36px 10px 14px;
+  border-radius:12px;
+  font-size:13.5px;
+  font-weight:500;
+  outline:none;
+  cursor:pointer;
+  appearance:none;
+  -webkit-appearance:none;
+  background-image:url("data:image/svg+xml,%3Csvg width='12' height='8' viewBox='0 0 12 8' fill='none' xmlns='http://www.w3.org/2000/svg'%3E%3Cpath d='M1.5 2L6 6.5L10.5 2' stroke='%2378736A' stroke-width='1.8' stroke-linecap='round' stroke-linejoin='round'/%3E%3C/svg%3E");
+  background-repeat:no-repeat;
+  background-position:right 14px center;
+  box-shadow:0 1px 3px rgba(38,36,31,.04);
+  transition:border-color .15s ease, box-shadow .15s ease, background-color .15s ease;
+}
+.field select:hover, .field-row select:hover, .filter-group select:hover{border-color:#D4CEBF;background-color:#FDFCF9;}
+.field select:focus, .field-row select:focus, .filter-group select:focus{border-color:var(--blue);box-shadow:0 0 0 3px var(--blue-soft);background-color:#FFFFFF;}
+
 .btn{border:none;border-radius:10px;padding:11px 18px;font-size:13.5px;font-weight:600;display:inline-flex;align-items:center;justify-content:center;gap:8px;transition:transform .1s ease, filter .15s, background .15s, box-shadow .15s;letter-spacing:.01em;white-space:nowrap;}
 .btn:active{transform:scale(.98);}
 .btn-primary{background:var(--blue);color:#fff;width:100%;padding:12px 18px;margin-top:6px;box-shadow:0 8px 20px -8px rgba(47,111,237,.55);}
@@ -401,7 +424,7 @@ table.admin-table tbody tr:hover{background:#FBFAF6;}
    Persistencia 100% en localStorage (proyecto de demostración / prototipo)
    ========================================================================= */
 
-const DB_KEY = 'lc_db_v3';
+const DB_KEY = 'lc_db_v5';
 const SESSION_KEY = 'lc_session_v1';
 const MAX_FILE_MB = 8;
 const MESES = ['Enero','Febrero','Marzo','Abril','Mayo','Junio','Julio','Agosto','Septiembre','Octubre','Noviembre','Diciembre'];
@@ -412,6 +435,7 @@ const ICONS = {
   grid: '<svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><rect x="3" y="3" width="8" height="8" rx="1.5"/><rect x="13" y="3" width="8" height="8" rx="1.5"/><rect x="3" y="13" width="8" height="8" rx="1.5"/><rect x="13" y="13" width="8" height="8" rx="1.5"/></svg>',
   file: '<svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M14 3H7a2 2 0 00-2 2v14a2 2 0 002 2h10a2 2 0 002-2V8z"/><path d="M14 3v5h5"/><path d="M9.5 12.5l4 4M13.5 12.5l-4 4"/></svg>',
   chart: '<svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M3 3v18h18"/><rect x="7" y="12" width="3" height="6" rx="0.5"/><rect x="12.5" y="8" width="3" height="10" rx="0.5"/><rect x="18" y="5" width="3" height="13" rx="0.5"/></svg>',
+  checklist: '<svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M9 11l3 3L22 4"/><path d="M21 12v7a2 2 0 01-2 2H5a2 2 0 01-2-2V5a2 2 0 012-2h11"/></svg>',
   users: '<svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><circle cx="9" cy="8" r="3.2"/><path d="M2.5 20c0-3.6 2.9-6.2 6.5-6.2s6.5 2.6 6.5 6.2"/><circle cx="17.5" cy="8.5" r="2.6"/><path d="M15.5 13.6c2.9.3 5 2.6 5 5.7"/></svg>',
   gear: '<svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="3.2"/><path d="M19.4 13.5a1.7 1.7 0 000-3l1.1-1.7-2-2-1.8 1a1.7 1.7 0 00-2.6-1.5L14 4h-3l-.1 2.3a1.7 1.7 0 00-2.6 1.5l-1.8-1-2 2 1.1 1.7a1.7 1.7 0 000 3L3.5 15.7l2 2 1.8-1a1.7 1.7 0 002.6 1.5L10 21h3l.1-2.3a1.7 1.7 0 002.6-1.5l1.8 1 2-2z"/></svg>',
   upload: '<svg width="30" height="30" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"><path d="M12 3v12m0 0l-4-4m4 4l4-4M4 17v2a2 2 0 002 2h12a2 2 0 002-2v-2"/></svg>',
@@ -436,14 +460,14 @@ function uid(prefix){ return prefix + '_' + Math.random().toString(36).slice(2,9
 function seedDB(){
   const companies = [
     { id:'c_agrogasoil', name:'AGROGASOIL, C.A.', createdAt: Date.now() },
-    { id:'c_portuguesa',  name:'Aportes Portuguesa de Oro', createdAt: Date.now() },
-    { id:'c_puertallano', name:'Aportes Puerta del Llano', createdAt: Date.now() }
+    { id:'c_covicente', name:'Centro Óptico Vicente', createdAt: Date.now() },
+    { id:'c_buenaventura', name:'Buena Ventura', createdAt: Date.now() }
   ];
   const users = [
     { id:'u_admin', username:'superadmin', password:'super123', role:'admin', name:'Administrador General', companyId:null },
     { id:'u_agrogasoil', username:'agrogasoil', password:'agro123', role:'empresa', name:'Operador Agrogasoil', companyId:'c_agrogasoil' },
-    { id:'u_portuguesa', username:'portuguesa', password:'port123', role:'empresa', name:'Operador Portuguesa de Oro', companyId:'c_portuguesa' },
-    { id:'u_puertallano', username:'puertallano', password:'llano123', role:'empresa', name:'Operador Puerta del Llano', companyId:'c_puertallano' }
+    { id:'u_covicente', username:'covicente', password:'vicente123', role:'empresa', name:'Operador Vicente', companyId:'c_covicente' },
+    { id:'u_buenaventura', username:'buenaventura', password:'buenaventura123', role:'empresa', name:'Operador Buena Ventura', companyId:'c_buenaventura' }
   ];
   return { companies, users, reports:{} };
 }
@@ -530,7 +554,7 @@ document.getElementById('hintToggle').addEventListener('click', () => {
   const box = document.getElementById('hintBox');
   box.classList.toggle('hidden');
   if(!box.classList.contains('hidden')){
-    box.innerHTML = `<b>Super Administrador:</b> superadmin / super123<br><b>Operador Estación 1:</b> agrogasoil / agro123<br><b>Portuguesa de Oro:</b> portuguesa / port123<br><b>Puerta del Llano:</b> puertallano / llano123`;
+    box.innerHTML = `<b>Super Administrador:</b> superadmin / super123<br><b>AGROGASOIL, C.A.:</b> agrogasoil / agro123<br><b>Centro Óptico Vicente:</b> covicente / vicente123<br><b>Buena Ventura:</b> buenaventura / buenaventura123`;
   }
 });
 document.getElementById('loginForm').addEventListener('submit', (e) => {
@@ -562,11 +586,13 @@ function navConfig(role){
         {key:'bienvenida', label:'Bienvenida', icon:ICONS.wave},
         {key:'dashboard', label:'Dashboard Principal', icon:ICONS.grid}
       ]},
-      { section:'Informes y Reportes', items:[
-        {key:'reportes', label:'Reportes de Empresas', icon:ICONS.chart}
+      { section:'Monitoreo y Control', items:[
+        {key:'checklist', label:'Checklist de Cumplimiento', icon:ICONS.checklist},
+        {key:'reportes', label:'Detalle de Reportes', icon:ICONS.chart}
       ]},
       { section:'Administración', items:[
-        {key:'empresas', label:'Empresas y Usuarios', icon:ICONS.users}
+        {key:'empresas', label:'Empresas Registradas', icon:ICONS.building},
+        {key:'usuarios', label:'Usuarios y Accesos', icon:ICONS.users}
       ]}
     ];
   }
@@ -575,8 +601,9 @@ function navConfig(role){
       {key:'bienvenida', label:'Bienvenida', icon:ICONS.wave},
       {key:'dashboard', label:'Dashboard Principal', icon:ICONS.grid}
     ]},
-    { section:'Informes y Reportes', items:[
+    { section:'Informes', items:[
       {key:'reporte', label:'Reporte Financiero', icon:ICONS.file},
+      {key:'checklist_empresa', label:'Checklist de Envíos', icon:ICONS.checklist},
       {key:'historial', label:'Historial de Reportes', icon:ICONS.chart}
     ]},
     { section:'Cuenta', items:[
@@ -630,8 +657,10 @@ function renderPage(){
     document.getElementById('topbarContext').innerHTML = 'Panel de <b>Administración General</b>';
     if(currentPage==='bienvenida') return renderAdminBienvenida();
     if(currentPage==='dashboard') return renderAdminDashboard();
+    if(currentPage==='checklist') return renderAdminChecklist();
     if(currentPage==='reportes') return adminDetailTarget ? renderAdminDetail() : renderAdminReportes();
     if(currentPage==='empresas') return renderAdminEmpresas();
+    if(currentPage==='usuarios') return renderAdminUsuarios();
     return renderAdminBienvenida();
   } else {
     const c = companyOf(user.companyId);
@@ -639,7 +668,7 @@ function renderPage(){
     if(currentPage==='bienvenida') return renderEmpresaBienvenida();
     if(currentPage==='dashboard') return renderEmpresaDashboard();
     if(currentPage==='reporte') return renderReporteFinanciero();
-    if(currentPage==='historial') return renderEmpresaHistorial();
+    if(currentPage==='checklist_empresa') return renderEmpresaChecklist();
     if(currentPage==='config') return renderEmpresaConfig();
     return renderEmpresaBienvenida();
   }
@@ -1359,71 +1388,388 @@ function renderAdminDetail(){
 }
 
 /* =========================================================================
-   ADMIN · EMPRESAS Y USUARIOS
+   ADMIN · CHECKLIST DE CUMPLIMIENTO
+   ========================================================================= */
+function renderAdminChecklist(){
+  const main = document.getElementById('mainArea');
+  const p = currentPeriodo();
+  
+  let validados=0, cargados=0, sinCargar=0;
+  DB.companies.forEach(c=>{
+    const r = getReport(c.id, p, false);
+    if(r && r.status==='validado') validados++;
+    else if(r && r.status==='cargado') cargados++;
+    else sinCargar++;
+  });
+  const total = DB.companies.length || 1;
+  const pctCumplido = Math.round(((validados + cargados) / total) * 100);
+
+  main.innerHTML = `
+    <div class="panel-header">
+      <div>
+        <div class="panel-title">Checklist de Cumplimiento (Control de Carga)</div>
+        <div class="panel-sub">Verificación de recepción de reportes Excel y validaciones para ${periodoLabel(p)}.</div>
+      </div>
+      ${periodSelectHTML('check')}
+    </div>
+
+    <div class="kpi-row">
+      <div class="kpi-card"><div class="top-row"><div class="label">Empresas Registradas</div><div class="icon-badge blue">${ICONS.building}</div></div><div class="value">${DB.companies.length}</div></div>
+      <div class="kpi-card"><div class="top-row"><div class="label">Porcentaje de Carga</div><div class="icon-badge green">${ICONS.chart}</div></div><div class="value" style="color:var(--green)">${pctCumplido}%</div></div>
+      <div class="kpi-card"><div class="top-row"><div class="label">Validados</div><div class="icon-badge green">${ICONS.check}</div></div><div class="value" style="color:var(--green)">${validados}</div></div>
+      <div class="kpi-card"><div class="top-row"><div class="label">Sin Cargar</div><div class="icon-badge red">${ICONS.clock}</div></div><div class="value" style="color:var(--red)">${sinCargar}</div></div>
+    </div>
+
+    <div class="admin-table-wrap">
+      <div class="thead-row">
+        <h3>Matriz de Control — ${periodoLabel(p)}</h3>
+      </div>
+      <table class="admin-table">
+        <thead>
+          <tr>
+            <th>Empresa</th>
+            <th>Archivo Excel</th>
+            <th>Quién Cargó</th>
+            <th>Flujo Neto ($)</th>
+            <th>Estado</th>
+            <th>Acciones Directas</th>
+          </tr>
+        </thead>
+        <tbody id="checklistRows"></tbody>
+      </table>
+    </div>
+  `;
+
+  bindPeriodSelect('check', ()=>{ renderAdminChecklist(); });
+
+  const tbody = document.getElementById('checklistRows');
+  if(!DB.companies.length){
+    tbody.innerHTML = `<tr><td colspan="6"><div class="empty-state">${ICONS.empty}<p>No hay empresas registradas.</p></div></td></tr>`;
+    return;
+  }
+
+  DB.companies.forEach(c=>{
+    const r = getReport(c.id, p, false) || blankReport(c.id, p);
+    const ext = r.file ? getFileExt(r.file.name) : '';
+    const cargadoPor = r.cargadoPor || (r.file ? r.file.uploadedBy : null);
+    
+    // Cálculo de flujo neto
+    const ing = parseFloat(r.resumen.totalIngresos) || 0;
+    const gas = parseFloat(r.resumen.totalGastos) || 0;
+    const cos = parseFloat(r.resumen.totalCostos) || 0;
+    const net = ing - (gas + cos);
+    const hasData = (ing || gas || cos);
+
+    const tr = document.createElement('tr');
+    tr.innerHTML = `
+      <td>
+        <div class="company-name-cell">
+          <span class="company-dot" style="background:${r.status==='validado'?'var(--green)':(r.status==='cargado'?'var(--orange)':'#C4BDAD')}"></span>
+          ${escapeHtml(c.name)}
+        </div>
+      </td>
+      <td>
+        ${r.file ? `<span class="file-chip">${ICONS.file} ${escapeHtml(r.file.name)} ${ext ? `<span class="ext-badge">${escapeHtml(ext)}</span>` : ''}</span>` : '<span style="color:var(--red);font-size:12px;font-weight:600;">❌ Sin archivo</span>'}
+      </td>
+      <td>
+        ${cargadoPor ? `<span class="user-chip-sm">${ICONS.users} ${escapeHtml(cargadoPor)}</span>` : '<span style="color:var(--text-faint);font-size:12px;">—</span>'}
+      </td>
+      <td>
+        ${hasData ? `<span style="font-family:var(--font-mono);font-weight:700;color:${net>=0?'var(--green)':'var(--red)'}">${net>=0?'+':'-'} $ ${fmt(Math.abs(net))}</span>` : '<span style="color:var(--text-faint);font-size:12px;">—</span>'}
+      </td>
+      <td>${statusStamp(r.status)}</td>
+      <td>
+        <div style="display:flex;gap:6px;flex-wrap:wrap;">
+          <button class="btn btn-ghost btn-sm" data-viewdetail="${c.id}|${p}">Ver detalle</button>
+          ${r.status==='cargado'?`<button class="btn btn-teal btn-sm" data-quickval="${c.id}|${p}">✓ Validar</button>`:''}
+          ${r.status!=='borrador'?`<button class="btn btn-red btn-sm" data-quickreopen="${c.id}|${p}">Devolver</button>`:''}
+        </div>
+      </td>
+    `;
+    tbody.appendChild(tr);
+  });
+
+  tbody.querySelectorAll('[data-viewdetail]').forEach(btn=>{
+    btn.addEventListener('click', ()=>{
+      const [companyId, periodo] = btn.dataset.viewdetail.split('|');
+      adminDetailTarget = { companyId, periodo }; previewSheetIndex=0;
+      currentPage = 'reportes'; renderPage();
+    });
+  });
+  tbody.querySelectorAll('[data-quickval]').forEach(btn=>{
+    btn.addEventListener('click', ()=>{
+      const [companyId, periodo] = btn.dataset.quickval.split('|');
+      const r = ensureReport(companyId, periodo);
+      const user = currentUser();
+      r.status='validado'; r.validadoPor=user.name; r.validadoFecha=Date.now();
+      saveDB(DB); showToast('Reporte validado.'); renderAdminChecklist();
+    });
+  });
+  tbody.querySelectorAll('[data-quickreopen]').forEach(btn=>{
+    btn.addEventListener('click', ()=>{
+      const [companyId, periodo] = btn.dataset.quickreopen.split('|');
+      openConfirm('¿Devolver este reporte a la empresa para edición?', ()=>{
+        const r = ensureReport(companyId, periodo);
+        r.status='borrador'; r.cargadoPor=null; r.cargadoFecha=null; r.validadoPor=null; r.validadoFecha=null;
+        saveDB(DB); showToast('Reporte devuelto a borrador.'); renderAdminChecklist();
+      });
+    });
+  });
+}
+
+/* =========================================================================
+   EMPRESA · CHECKLIST DE ENVÍOS ANUALES
+   ========================================================================= */
+function renderEmpresaChecklist(){
+  const user = currentUser();
+  const company = companyOf(user.companyId);
+  const main = document.getElementById('mainArea');
+  
+  const anio = selAnio;
+  
+  main.innerHTML = `
+    <div class="panel-header">
+      <div>
+        <div class="panel-title">Checklist de Envíos Anuales</div>
+        <div class="panel-sub">Control de entregas mensuales para ${escapeHtml(company.name)} en el año ${anio}.</div>
+      </div>
+      <div class="filter-group">
+        <select id="checkAnioCompany">
+          ${yearsInSystem().map(y=>`<option value="${y}" ${selAnio===y?'selected':''}>${y}</option>`).join('')}
+        </select>
+      </div>
+    </div>
+
+    <div class="admin-table-wrap">
+      <table class="admin-table">
+        <thead>
+          <tr>
+            <th>Mes</th>
+            <th>Archivo Cargado</th>
+            <th>Fecha de Carga</th>
+            <th>Estado</th>
+            <th>Acción</th>
+          </tr>
+        </thead>
+        <tbody>
+          ${MESES.map((m, idx)=>{
+            const p = anio + '-' + String(idx+1).padStart(2,'0');
+            const r = getReport(company.id, p, false) || blankReport(company.id, p);
+            return `
+              <tr>
+                <td><b>${m} ${anio}</b></td>
+                <td>${r.file ? `<span class="file-chip">${ICONS.file} ${escapeHtml(r.file.name)}</span>` : '<span style="color:var(--text-faint);font-size:12px;">Sin archivo</span>'}</td>
+                <td>${r.cargadoFecha ? new Date(r.cargadoFecha).toLocaleDateString('es-VE') : '—'}</td>
+                <td>${statusStamp(r.status)}</td>
+                <td><button class="btn btn-ghost btn-sm" data-go-month="${idx+1}">Gestionar</button></td>
+              </tr>
+            `;
+          }).join('')}
+        </tbody>
+      </table>
+    </div>
+  `;
+
+  document.getElementById('checkAnioCompany').addEventListener('change', (e)=>{
+    selAnio = parseInt(e.target.value, 10);
+    renderEmpresaChecklist();
+  });
+
+  main.querySelectorAll('[data-go-month]').forEach(btn=>{
+    btn.addEventListener('click', ()=>{
+      selMes = parseInt(btn.dataset.goMonth, 10);
+      goTo('reporte');
+    });
+  });
+}
+
+/* =========================================================================
+   ADMIN · GESTIÓN DE EMPRESAS
    ========================================================================= */
 function renderAdminEmpresas(){
   const main = document.getElementById('mainArea');
   main.innerHTML = `
-    <div class="panel-header"><div><div class="panel-title">Empresas y Usuarios</div><div class="panel-sub">Cada empresa tiene un único usuario para cargar sus reportes.</div></div></div>
+    <div class="panel-header">
+      <div>
+        <div class="panel-title">Gestión de Empresas</div>
+        <div class="panel-sub">Registra y administra las empresas o estaciones asociadas al sistema.</div>
+      </div>
+    </div>
     <div class="manage-grid">
       <div class="manage-card">
-        <h3>Nueva empresa</h3>
-        <div class="card-sub">Crea la empresa y su usuario de acceso al mismo tiempo.</div>
-        <div class="field-row"><label>Nombre de la empresa</label><input id="newCoName" type="text" placeholder="Ej. Distribuidora El Central"></div>
-        <div class="field-row"><label>Usuario de acceso</label><input id="newCoUser" type="text" placeholder="ej. elcentral"></div>
-        <div class="field-row"><label>Contraseña</label><input id="newCoPass" type="text" placeholder="ej. central123"></div>
-        <button class="btn btn-primary" id="createCoBtn" style="width:100%;">Crear empresa y usuario</button>
+        <h3>Registrar Nueva Empresa</h3>
+        <div class="card-sub">Crea una empresa en el sistema. Luego podrás asignarle usuarios en "Usuarios y Accesos".</div>
+        <div class="field-row"><label>Nombre de la empresa / estación</label><input id="newCoName" type="text" placeholder="Ej. Centro Óptico Vicente"></div>
+        <div class="field-row"><label>RIF / Identificación (Opcional)</label><input id="newCoRif" type="text" placeholder="Ej. J-12345678-0"></div>
+        <button class="btn btn-primary" id="createCoBtn" style="width:100%;">Registrar Empresa</button>
       </div>
       <div class="manage-card">
-        <h3>Empresas registradas (${DB.companies.length})</h3>
-        <div class="card-sub">Restablece contraseñas o elimina accesos cuando lo necesites.</div>
+        <h3>Empresas Registradas (${DB.companies.length})</h3>
+        <div class="card-sub">Lista de empresas asociadas al sistema.</div>
         <div class="mini-list" id="companyList"></div>
       </div>
     </div>
   `;
+
   document.getElementById('createCoBtn').addEventListener('click', ()=>{
     const name = document.getElementById('newCoName').value.trim();
-    const uname = document.getElementById('newCoUser').value.trim().toLowerCase();
-    const pass = document.getElementById('newCoPass').value;
-    if(!name || !uname || !pass){ showToast('Completa todos los campos.', true); return; }
-    if(DB.users.some(u=>u.username.toLowerCase()===uname)){ showToast('Ese usuario ya existe.', true); return; }
-    const co = { id: uid('c'), name, createdAt: Date.now() };
+    const rif = document.getElementById('newCoRif').value.trim();
+    if(!name){ showToast('Ingresa el nombre de la empresa.', true); return; }
+    if(DB.companies.some(c=>c.name.toLowerCase()===name.toLowerCase())){ showToast('Esa empresa ya existe.', true); return; }
+    const co = { id: uid('c'), name, rif: rif||'', createdAt: Date.now() };
     DB.companies.push(co);
-    DB.users.push({ id: uid('u'), username: uname, password: pass, role:'empresa', name:'Operador ' + name, companyId: co.id });
-    saveDB(DB); showToast('Empresa creada correctamente.'); renderAdminEmpresas();
+    saveDB(DB); showToast('Empresa registrada correctamente.'); renderAdminEmpresas();
   });
+
   const list = document.getElementById('companyList');
   DB.companies.forEach(c=>{
-    const u = DB.users.find(x=>x.companyId===c.id);
+    const usersCount = DB.users.filter(x=>x.companyId===c.id).length;
     const item = document.createElement('div');
     item.className = 'mini-list-item';
     item.innerHTML = `
-      <div><div>${escapeHtml(c.name)}</div><div class="meta">usuario: ${u?escapeHtml(u.username):'—'}</div></div>
+      <div>
+        <div style="font-weight:600;">${escapeHtml(c.name)}</div>
+        <div class="meta">${c.rif ? 'RIF: '+escapeHtml(c.rif)+' · ' : ''}${usersCount} usuario(s) asociado(s)</div>
+      </div>
       <div class="actions">
-        <button class="btn btn-ghost btn-sm" data-reset="${u?u.id:''}">Restablecer clave</button>
+        <button class="btn btn-ghost btn-sm" data-editco="${c.id}">Editar</button>
         <button class="btn btn-red btn-sm" data-delco="${c.id}">Eliminar</button>
       </div>
     `;
     list.appendChild(item);
   });
-  list.querySelectorAll('[data-reset]').forEach(btn=>{
+
+  list.querySelectorAll('[data-editco]').forEach(btn=>{
     btn.addEventListener('click', ()=>{
-      if(!btn.dataset.reset) return;
-      openPrompt('Nueva contraseña para este usuario', (val)=>{
-        if(!val || val.length<4){ showToast('La contraseña debe tener al menos 4 caracteres.', true); return; }
-        const u = DB.users.find(x=>x.id===btn.dataset.reset);
-        if(u){ u.password = val; saveDB(DB); showToast('Contraseña restablecida.'); }
+      const co = DB.companies.find(x=>x.id===btn.dataset.editco);
+      if(!co) return;
+      openPrompt('Nuevo nombre para la empresa', (val)=>{
+        if(!val || !val.trim()){ showToast('El nombre no puede estar vacío.', true); return; }
+        co.name = val.trim();
+        saveDB(DB); showToast('Nombre actualizado.'); renderAdminEmpresas();
       });
     });
   });
+
   list.querySelectorAll('[data-delco]').forEach(btn=>{
     btn.addEventListener('click', ()=>{
       const id = btn.dataset.delco;
-      openConfirm('¿Eliminar esta empresa? Se borrarán también su usuario y sus reportes/archivos cargados.', ()=>{
+      openConfirm('¿Eliminar esta empresa? Se desvincularán sus usuarios y se eliminarán sus reportes.', ()=>{
         DB.companies = DB.companies.filter(c=>c.id!==id);
-        DB.users = DB.users.filter(u=>u.companyId!==id);
+        DB.users.forEach(u=>{ if(u.companyId===id) u.companyId=null; });
         Object.keys(DB.reports).forEach(k=>{ if(DB.reports[k].companyId===id) delete DB.reports[k]; });
         saveDB(DB); showToast('Empresa eliminada.'); renderAdminEmpresas();
+      });
+    });
+  });
+}
+
+/* =========================================================================
+   ADMIN · GESTIÓN DE USUARIOS Y ACCESOS
+   ========================================================================= */
+function renderAdminUsuarios(){
+  const main = document.getElementById('mainArea');
+  main.innerHTML = `
+    <div class="panel-header">
+      <div>
+        <div class="panel-title">Usuarios y Accesos</div>
+        <div class="panel-sub">Un usuario puede tener rol de empresa o administrador y estar vinculado a una empresa asociada.</div>
+      </div>
+    </div>
+    <div class="manage-grid">
+      <div class="manage-card">
+        <h3>Registrar Nuevo Usuario</h3>
+        <div class="card-sub">Crea un usuario y vinculalo a su empresa correspondiente.</div>
+        <div class="field-row"><label>Nombre del Operador / Persona</label><input id="newUName" type="text" placeholder="Ej. Operador Vicente"></div>
+        <div class="field-row"><label>Usuario de acceso (username)</label><input id="newUUser" type="text" placeholder="ej. covicente"></div>
+        <div class="field-row"><label>Contraseña</label><input id="newUPass" type="text" placeholder="ej. vicente123"></div>
+        <div class="field-row">
+          <label>Rol de Acceso</label>
+          <select id="newURole">
+            <option value="empresa" selected>Empresa (Operador)</option>
+            <option value="admin">Super Administrador</option>
+          </select>
+        </div>
+        <div class="field-row" id="companySelectWrap">
+          <label>Empresa Asociada</label>
+          <select id="newUCompany">
+            <option value="">-- Sin empresa asociada --</option>
+            ${DB.companies.map(c=>`<option value="${c.id}">${escapeHtml(c.name)}</option>`).join('')}
+          </select>
+        </div>
+        <button class="btn btn-primary" id="createUBtn" style="width:100%;">Crear Usuario</button>
+      </div>
+      <div class="manage-card">
+        <h3>Usuarios Registrados (${DB.users.length})</h3>
+        <div class="card-sub">Restablece contraseñas, cambia empresa asociada o elimina usuarios.</div>
+        <div class="mini-list" id="userList"></div>
+      </div>
+    </div>
+  `;
+
+  const roleSel = document.getElementById('newURole');
+  const coWrap = document.getElementById('companySelectWrap');
+  if(roleSel && coWrap){
+    roleSel.addEventListener('change', (e)=>{
+      coWrap.style.display = e.target.value === 'admin' ? 'none' : 'block';
+    });
+  }
+
+  document.getElementById('createUBtn').addEventListener('click', ()=>{
+    const name = document.getElementById('newUName').value.trim();
+    const uname = document.getElementById('newUUser').value.trim().toLowerCase();
+    const pass = document.getElementById('newUPass').value;
+    const role = document.getElementById('newURole').value;
+    const companyId = document.getElementById('newUCompany').value || null;
+
+    if(!name || !uname || !pass){ showToast('Completa todos los campos obligatorios.', true); return; }
+    if(DB.users.some(u=>u.username.toLowerCase()===uname)){ showToast('Ese nombre de usuario ya existe.', true); return; }
+    if(role==='empresa' && !companyId){ showToast('Selecciona la empresa asociada para el usuario.', true); return; }
+
+    DB.users.push({ id: uid('u'), username: uname, password: pass, role, name, companyId });
+    saveDB(DB); showToast('Usuario creado correctamente.'); renderAdminUsuarios();
+  });
+
+  const list = document.getElementById('userList');
+  DB.users.forEach(u=>{
+    const co = companyOf(u.companyId);
+    const item = document.createElement('div');
+    item.className = 'mini-list-item';
+    item.innerHTML = `
+      <div>
+        <div style="font-weight:600;">${escapeHtml(u.name)} <span style="font-size:11px;font-weight:700;color:var(--blue);font-family:var(--font-mono);">(@${escapeHtml(u.username)})</span></div>
+        <div class="meta">
+          <span style="display:inline-block;padding:1px 6px;border-radius:4px;font-size:10px;font-weight:700;background:${u.role==='admin'?'var(--purple-soft)':'var(--blue-soft)'};color:${u.role==='admin'?'var(--purple)':'var(--blue)'}">${u.role==='admin'?'SUPER ADMIN':'EMPRESA'}</span>
+          · ${co ? escapeHtml(co.name) : 'Sin empresa'}
+        </div>
+      </div>
+      <div class="actions">
+        <button class="btn btn-ghost btn-sm" data-resetu="${u.id}">Cambiar Clave</button>
+        ${u.username!=='superadmin'?`<button class="btn btn-red btn-sm" data-delu="${u.id}">Eliminar</button>`:''}
+      </div>
+    `;
+    list.appendChild(item);
+  });
+
+  list.querySelectorAll('[data-resetu]').forEach(btn=>{
+    btn.addEventListener('click', ()=>{
+      const u = DB.users.find(x=>x.id===btn.dataset.resetu);
+      if(!u) return;
+      openPrompt('Nueva contraseña para @' + u.username, (val)=>{
+        if(!val || val.length<4){ showToast('La contraseña debe tener al menos 4 caracteres.', true); return; }
+        u.password = val;
+        saveDB(DB); showToast('Contraseña restablecida.');
+      });
+    });
+  });
+
+  list.querySelectorAll('[data-delu]').forEach(btn=>{
+    btn.addEventListener('click', ()=>{
+      const u = DB.users.find(x=>x.id===btn.dataset.delu);
+      if(!u) return;
+      openConfirm('¿Eliminar al usuario @' + u.username + '?', ()=>{
+        DB.users = DB.users.filter(x=>x.id!==u.id);
+        saveDB(DB); showToast('Usuario eliminado.'); renderAdminUsuarios();
       });
     });
   });

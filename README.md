@@ -18,11 +18,11 @@ Este sistema permite administrar y supervisar los reportes financieros mensuales
    - **Historial de Reportes**: Consulta de cargas pasadas con filtros por mes y año.
 
 2. **Panel del Super Administrador**:
+   - **Checklist de Cumplimiento**: Pantalla dedicada de control mensual con la matriz de recepción de reportes Excel, estado de datos cargados y acciones rápidas de validación.
    - **Estadísticas Visuales y Gráficos**: Barra de progreso de cumplimiento de carga (Validados %, Cargados %, Sin Cargar %) con indicadores porcentuales en tiempo real.
    - **Filtros Avanzados**: Filtrado combinado por **Empresa**, **Estado de Datos Cargados** (Todos, Sí, No), **Mes** y **Año**.
-   - **Auditoría Detallada**: Visualización de la columna **Quién Cargó** (operador registrado) y la **Extensión del Archivo** (`.XLSX`, `.CSV`, etc.).
-   - **Flujo de Validación**: Revisión de archivos, notas de la empresa y opciones para **Validar Reporte** o **Devolver / Reabrir** con notas del administrador.
-   - **Gestión de Empresas y Usuarios**: Creación de nuevas empresas con credenciales de acceso, restablecimiento de contraseñas y eliminación de registros.
+   - **Gestión de Empresas**: Módulo independiente para registrar y administrar las empresas o estaciones asociadas.
+   - **Gestión de Usuarios y Accesos**: Módulo independiente para crear usuarios con su rol (`Empresa` o `Super Administrador`) y vincularlos a su empresa correspondiente.
 
 ---
 
@@ -34,10 +34,10 @@ El sistema cuenta con datos iniciales predeterminados (*seeded*) guardados local
 | :--- | :--- | :--- | :--- |
 | **Super Administrador** | Administración General | `superadmin` | `super123` |
 | **Empresa (Operador)** | AGROGASOIL, C.A. | `agrogasoil` | `agro123` |
-| **Empresa (Operador)** | Aportes Portuguesa de Oro | `portuguesa` | `port123` |
-| **Empresa (Operador)** | Aportes Puerta del Llano | `puertallano` | `llano123` |
+| **Empresa (Operador)** | Centro Óptico Vicente | `covicente` | `vicente123` |
+| **Empresa (Operador)** | Buena Ventura | `buenaventura` | `buenaventura123` |
 
-> **Nota**: El Super Administrador puede crear nuevas empresas o restablecer la contraseña de cualquier usuario desde el módulo **"Empresas y Usuarios"**.
+> **Nota**: El Super Administrador puede crear nuevas empresas y asociarles usuarios con claves personalizadas desde los módulos **"Empresas Registradas"** y **"Usuarios y Accesos"**.
 
 ---
 
