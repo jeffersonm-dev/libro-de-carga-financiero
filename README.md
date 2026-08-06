@@ -54,3 +54,17 @@ El sistema cuenta con datos iniciales predeterminados (*seeded*) guardados local
 - **HTML5 & CSS3 Vanilla**: Diseño responsivo con sistema de variables CSS, glassmorphism, sombras suaves y degradados.
 - **JavaScript (ES6+)**: Lógica reactiva de estado sin dependencias pesadas.
 - **SheetJS (xlsx.full.min.js)**: Decodificación y renderizado de hojas de cálculo Excel directamente en el cliente.
+
+---
+
+## 🌐 Despliegue en Render / GitHub Pages
+
+Para publicar este proyecto en **Render** (o GitHub Pages) como sitio web estático:
+
+1. El archivo principal debe llamarse **`index.html`** *(ya creado en el repositorio)*.
+2. En Render, crea un nuevo **Static Site**.
+3. Conecta tu repositorio de GitHub.
+4. Configuración en Render:
+   - **Build Command**: *(Dejar vacío)*.
+   - **Publish Directory**: `.` *(Raíz del proyecto)*.
+5. Render desplegará la aplicación web de inmediato sin errores 404.
