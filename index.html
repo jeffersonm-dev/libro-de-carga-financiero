@@ -424,7 +424,7 @@ table.admin-table tbody tr:hover{background:#FBFAF6;}
    Persistencia 100% en localStorage (proyecto de demostración / prototipo)
    ========================================================================= */
 
-const DB_KEY = 'lc_db_v6';
+const DB_KEY = 'lc_db_v7';
 const SESSION_KEY = 'lc_session_v1';
 const MAX_FILE_MB = 8;
 const MESES = ['Enero','Febrero','Marzo','Abril','Mayo','Junio','Julio','Agosto','Septiembre','Octubre','Noviembre','Diciembre'];
@@ -827,29 +827,38 @@ function parseWorkbookFromBase64(base64){
   catch(e){ console.warn('No se pudo parsear el archivo', e); return null; }
 }
 function renderPreviewBlock(report, containerId){
-  const el = document.getElementById(containerId);
-  if(!el) return;
-  if(!report.file){ el.innerHTML=''; return; }
-  const wb = parseWorkbookFromBase64(report.file.base64);
-  if(!wb){ el.innerHTML = `<div class="empty-state"><p>No se pudo generar la vista previa, pero el archivo se guardó correctamente y puede descargarse.</p></div>`; return; }
-  if(previewSheetIndex >= wb.SheetNames.length) previewSheetIndex = 0;
-  const sheetName = wb.SheetNames[previewSheetIndex];
-  const ws = wb.Sheets[sheetName];
-  const rows = XLSX.utils.sheet_to_json(ws, { header:1, defval:'', raw:false });
-  const limitedRows = rows.slice(0,200);
-  const maxCols = Math.min(20, limitedRows.reduce((m,r)=>Math.max(m,r.length),0));
-  el.innerHTML = `
-    <div class="preview-tabs" id="previewTabs">
-      ${wb.SheetNames.map((n,i)=>`<button class="preview-tab ${i===previewSheetIndex?'active':''}" data-sheet="${i}">${escapeHtml(n)}</button>`).join('')}
-    </div>
-    <div class="preview-scroll"><table class="preview-table"><tbody>
-      ${limitedRows.map((r,ri)=>`<tr><td class="rownum">${ri+1}</td>${Array.from({length:maxCols}).map((_,ci)=>`<td>${escapeHtml(r[ci]??'')}</td>`).join('')}</tr>`).join('')}
-    </tbody></table></div>
-    ${rows.length>200?`<div style="font-size:11.5px;color:var(--text-faint);margin-top:8px;">Mostrando las primeras 200 filas de ${rows.length}.</div>`:''}
-  `;
-  el.querySelectorAll('[data-sheet]').forEach(btn=>{
-    btn.addEventListener('click', ()=>{ previewSheetIndex=parseInt(btn.dataset.sheet,10); renderPreviewBlock(report, containerId); });
-  });
+  try {
+    const el = document.getElementById(containerId);
+    if(!el) return;
+    if(!report.file || !report.file.base64){ el.innerHTML=''; return; }
+    const wb = parseWorkbookFromBase64(report.file.base64);
+    if(!wb || !wb.SheetNames || !wb.SheetNames.length){
+      el.innerHTML = `<div class="empty-state"><p>Archivo adjunto recibido. Puedes descargarlo directamente para revisar su contenido.</p></div>`;
+      return;
+    }
+    if(previewSheetIndex >= wb.SheetNames.length) previewSheetIndex = 0;
+    const sheetName = wb.SheetNames[previewSheetIndex];
+    const ws = wb.Sheets[sheetName];
+    const rows = XLSX.utils.sheet_to_json(ws, { header:1, defval:'', raw:false });
+    const limitedRows = rows.slice(0,200);
+    const maxCols = Math.min(20, limitedRows.reduce((m,r)=>Math.max(m,r.length),0));
+    el.innerHTML = `
+      <div class="preview-tabs" id="previewTabs">
+        ${wb.SheetNames.map((n,i)=>`<button class="preview-tab ${i===previewSheetIndex?'active':''}" data-sheet="${i}">${escapeHtml(n)}</button>`).join('')}
+      </div>
+      <div class="preview-scroll"><table class="preview-table"><tbody>
+        ${limitedRows.map((r,ri)=>`<tr><td class="rownum">${ri+1}</td>${Array.from({length:maxCols}).map((_,ci)=>`<td>${escapeHtml(r[ci]??'')}</td>`).join('')}</tr>`).join('')}
+      </tbody></table></div>
+      ${rows.length>200?`<div style="font-size:11.5px;color:var(--text-faint);margin-top:8px;">Mostrando las primeras 200 filas de ${rows.length}.</div>`:''}
+    `;
+    el.querySelectorAll('[data-sheet]').forEach(btn=>{
+      btn.addEventListener('click', ()=>{ previewSheetIndex=parseInt(btn.dataset.sheet,10); renderPreviewBlock(report, containerId); });
+    });
+  } catch(e) {
+    console.warn('Error en la vista previa:', e);
+    const el = document.getElementById(containerId);
+    if(el) el.innerHTML = `<div class="empty-state"><p>El archivo de soporte se encuentra guardado y disponible para su descarga.</p></div>`;
+  }
 }
 
 /* =========================================================================
@@ -886,6 +895,7 @@ function triggerFilePicker(report, onChange){
 }
 function renderFileArea(containerId, report, locked, onChange){
   const el = document.getElementById(containerId);
+  if(!el) return;
   if(report.file){
     const ext = getFileExt(report.file.name);
     const uBy = report.cargadoPor || report.file.uploadedBy || 'Empresa';
@@ -906,11 +916,11 @@ function renderFileArea(containerId, report, locked, onChange){
       </div>
       ${!locked?`<div style="margin-top:12px;"><button class="btn btn-ghost btn-sm" id="replaceBtn">Reemplazar archivo</button></div>`:''}
     `;
-    document.getElementById('dlBtn').addEventListener('click', ()=>downloadFile(report.file));
-    document.getElementById('rmBtn')?.addEventListener('click', ()=>{
+    el.querySelector('#dlBtn')?.addEventListener('click', ()=>downloadFile(report.file));
+    el.querySelector('#rmBtn')?.addEventListener('click', ()=>{
       openConfirm('¿Quitar el archivo cargado para este período?', ()=>{ report.file=null; saveDB(DB); onChange(); });
     });
-    document.getElementById('replaceBtn')?.addEventListener('click', ()=>triggerFilePicker(report, onChange));
+    el.querySelector('#replaceBtn')?.addEventListener('click', ()=>triggerFilePicker(report, onChange));
   } else {
     el.innerHTML = `
       <div class="dropzone" id="dz">
@@ -919,11 +929,13 @@ function renderFileArea(containerId, report, locked, onChange){
         <div class="dz-sub">o haz clic para buscar el archivo · .xlsx, .xls, .xlsm, .csv</div>
       </div>
     `;
-    const dz = document.getElementById('dz');
-    dz.addEventListener('click', ()=>triggerFilePicker(report, onChange));
-    dz.addEventListener('dragover', (e)=>{ e.preventDefault(); dz.classList.add('drag'); });
-    dz.addEventListener('dragleave', ()=>dz.classList.remove('drag'));
-    dz.addEventListener('drop', (e)=>{ e.preventDefault(); dz.classList.remove('drag'); handleFileUpload(e.dataTransfer.files[0], report, onChange); });
+    const dz = el.querySelector('#dz');
+    if(dz){
+      dz.addEventListener('click', ()=>triggerFilePicker(report, onChange));
+      dz.addEventListener('dragover', (e)=>{ e.preventDefault(); dz.classList.add('drag'); });
+      dz.addEventListener('dragleave', ()=>dz.classList.remove('drag'));
+      dz.addEventListener('drop', (e)=>{ e.preventDefault(); dz.classList.remove('drag'); handleFileUpload(e.dataTransfer.files[0], report, onChange); });
+    }
   }
 }
 
@@ -1366,17 +1378,25 @@ function renderAdminReportes(){
     btn.addEventListener('click', ()=>{
       const [companyId, periodo] = btn.dataset.view.split('|');
       adminDetailTarget = { companyId, periodo }; previewSheetIndex=0;
+      currentPage = 'reportes';
       renderPage();
     });
   });
 }
 
 function renderAdminDetail(){
+  if(!adminDetailTarget) return;
   const { companyId, periodo } = adminDetailTarget;
   const company = companyOf(companyId);
   if(!company){ adminDetailTarget=null; renderPage(); return; }
   const report = ensureReport(companyId, periodo);
   const main = document.getElementById('mainArea');
+
+  const resumen = report.resumen || { totalIngresos:'', totalGastos:'', totalCostos:'', saldoBancoCaja:'' };
+  const ing = parseFloat(resumen.totalIngresos) || 0;
+  const gas = parseFloat(resumen.totalGastos) || 0;
+  const cos = parseFloat(resumen.totalCostos) || 0;
+  const net = ing - (gas + cos);
 
   main.innerHTML = `
     <button class="back-link" id="backBtn">← Volver al panel</button>
@@ -1386,29 +1406,59 @@ function renderAdminDetail(){
         <div style="display:flex;align-items:center;gap:16px;">${statusStamp(report.status)}${report.status==='validado'?`<div class="stamp-graphic"><span>VALIDADO<br>OK</span></div>`:''}</div>
       </div>
       ${report.notasEmpresa?`<div class="notas-empresa"><b>Nota de la empresa:</b> ${escapeHtml(report.notasEmpresa)}</div>`:''}
-      <div class="content-grid">
-        <div>
-          <div class="card"><h3>Archivo cargado</h3><div class="card-sub">Excel enviado por la empresa para este período.</div><div id="fileAreaAdmin"></div></div>
-          <div class="card ${report.file?'':'hidden'}" id="previewCardAdmin"><h3>Vista previa</h3><div class="card-sub">Contenido del archivo, hoja por hoja.</div><div id="previewBlockAdmin"></div></div>
+
+      <!-- TOTALES FINANCIEROS PRIMERO -->
+      <div class="card" style="margin-bottom:20px;">
+        <h3>Totales Financieros del Período (${periodoLabel(periodo)})</h3>
+        <div class="card-sub">Resumen de ingresos, gastos, costos y flujo neto informados por la empresa.</div>
+        <div class="kpi-row" style="margin-bottom:16px;">
+          <div class="kpi-card">
+            <div class="top-row"><div class="label">Total Ingresos</div><div class="icon-badge blue">${ICONS.chart}</div></div>
+            <div class="value" style="color:var(--blue)">$ ${fmt(resumen.totalIngresos)}</div>
+          </div>
+          <div class="kpi-card">
+            <div class="top-row"><div class="label">Total Gastos</div><div class="icon-badge red">${ICONS.chart}</div></div>
+            <div class="value" style="color:var(--red)">$ ${fmt(resumen.totalGastos)}</div>
+          </div>
+          <div class="kpi-card">
+            <div class="top-row"><div class="label">Total Costos</div><div class="icon-badge orange">${ICONS.chart}</div></div>
+            <div class="value" style="color:var(--orange)">$ ${fmt(resumen.totalCostos)}</div>
+          </div>
+          <div class="kpi-card">
+            <div class="top-row"><div class="label">Saldo Banco / Caja</div><div class="icon-badge purple">${ICONS.building}</div></div>
+            <div class="value">$ ${fmt(resumen.saldoBancoCaja)}</div>
+          </div>
         </div>
-        <div>
-          <div class="card"><h3>Resumen rápido reportado</h3>
-            <div class="mini-summary-grid">
-              <div class="field-row"><label>Total ingresos $</label><input value="${fmt(report.resumen.totalIngresos)}" disabled></div>
-              <div class="field-row"><label>Total gastos $</label><input value="${fmt(report.resumen.totalGastos)}" disabled></div>
-              <div class="field-row"><label>Total costos $</label><input value="${fmt(report.resumen.totalCostos)}" disabled></div>
-              <div class="field-row"><label>Saldo banco/caja $</label><input value="${fmt(report.resumen.saldoBancoCaja)}" disabled></div>
-            </div>
+
+        <div class="flujo-neto-card">
+          <div style="font-size:11.5px;color:var(--text-faint);text-transform:uppercase;letter-spacing:.05em;font-weight:600;">Flujo Neto del Período (Ingresos - Gastos - Costos)</div>
+          <div class="flujo-neto-val ${net>=0?'positive':'negative'}">
+            ${net>=0?'+':'-'} $ ${fmt(Math.abs(net))} 
+            <span style="font-size:12.5px;font-weight:600;color:${net>=0?'var(--green)':'var(--red)'}">(${net>=0?'Superávit':'Déficit'})</span>
           </div>
         </div>
       </div>
+
+      <!-- SOPORTE Y ARCHIVO EXCEL DEBAJO -->
+      <div class="card">
+        <h3>Archivo Excel de Soporte</h3>
+        <div class="card-sub">Documento adjunto enviado por la empresa.</div>
+        <div id="fileAreaAdmin"></div>
+      </div>
+      
+      <div class="card ${report.file?'':'hidden'}" id="previewCardAdmin">
+        <h3>Vista previa de Excel</h3>
+        <div class="card-sub">Exploración de hojas y celdas cargadas.</div>
+        <div id="previewBlockAdmin"></div>
+      </div>
+
       ${report.status !== 'borrador' ? `
       <div class="validate-bar">
         <h4>Validación del reporte</h4>
-        <textarea id="notasAdminInput" placeholder="Observaciones para la empresa...">${escapeHtml(report.notasAdmin||'')}</textarea>
+        <textarea id="notasAdminInput" placeholder="Observaciones o comentarios para la empresa...">${escapeHtml(report.notasAdmin||'')}</textarea>
         <div class="validate-actions">
           ${report.status==='cargado'?`<button class="btn btn-teal" id="validateBtn">✓ Validar reporte</button>`:''}
-          <button class="btn btn-red" id="rejectBtn">Reabrir / devolver a la empresa</button>
+          <button class="btn btn-red" id="rejectBtn">Devolver a la empresa</button>
         </div>
       </div>` : `<div class="validate-bar"><h4>Validación del reporte</h4><p style="color:var(--text-faint);font-size:13px;">La empresa aún no ha cargado este reporte.</p></div>`}
     </div>
@@ -1419,7 +1469,7 @@ function renderAdminDetail(){
     document.getElementById('previewCardAdmin').classList.remove('hidden');
     renderPreviewBlock(report, 'previewBlockAdmin');
   } else {
-    document.getElementById('fileAreaAdmin').innerHTML = `<div class="empty-state">${ICONS.empty}<p>Esta empresa aún no ha subido su archivo para este período.</p></div>`;
+    document.getElementById('fileAreaAdmin').innerHTML = `<div class="empty-state">${ICONS.empty}<p>Esta empresa aún no ha subido su archivo Excel para este período.</p></div>`;
   }
   document.getElementById('validateBtn')?.addEventListener('click', ()=>{
     const user = currentUser();
