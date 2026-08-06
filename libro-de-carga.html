@@ -1058,7 +1058,8 @@ function renderReporteFinanciero(){
         <div class="card ${report.file?'':'hidden'}" id="previewCard">
           <h3>Vista previa del Excel</h3>
           <div class="card-sub">Explora el contenido cargado, hoja por hoja.</div>
-          <div id="previewBlock"></div>
+          <button class="btn btn-ghost btn-sm" id="openPreviewBtn">Cargar vista previa</button>
+          <div id="previewBlock" style="margin-top:16px;"></div>
         </div>
       </div>
       <div>
@@ -1102,7 +1103,16 @@ function renderReporteFinanciero(){
 
   renderFileArea('fileArea', report, locked, ()=>goTo('reporte'));
   const previewCard = document.getElementById('previewCard');
-  if(report.file){ previewCard.classList.remove('hidden'); renderPreviewBlock(report, 'previewBlock'); }
+  const openPreviewBtn = document.getElementById('openPreviewBtn');
+  if(report.file){
+    previewCard.classList.remove('hidden');
+    openPreviewBtn?.addEventListener('click', ()=>{
+      openPreviewBtn.disabled = true;
+      openPreviewBtn.textContent = 'Cargando vista previa…';
+      renderPreviewBlock(report, 'previewBlock');
+      setTimeout(()=>{ openPreviewBtn.classList.add('hidden'); }, 100);
+    });
+  }
 
   function calcNeto(){
     const ing = parseFloat(report.resumen.totalIngresos) || 0;
