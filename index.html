@@ -170,8 +170,14 @@ svg{display:block;}
 .panel-header{display:flex;align-items:center;justify-content:space-between;flex-wrap:wrap;gap:14px;margin-bottom:22px;}
 .panel-title{font-family:var(--font-display);font-size:23px;font-weight:700;}
 .panel-sub{color:var(--text-dim);font-size:13.5px;margin-top:4px;}
-.filter-group{display:flex;gap:8px;align-items:center;flex-wrap:wrap;}
-.filter-group select{background:#fff;border:1px solid var(--border);color:var(--text);padding:9px 12px;border-radius:10px;font-size:13px;box-shadow:var(--shadow-card);}
+.filter-group{display:flex;gap:10px;align-items:center;flex-wrap:wrap;width:100%;justify-content:flex-start;}
+.filter-group::-webkit-scrollbar{height:8px;}
+.filter-group::-webkit-scrollbar-track{background:transparent;}
+.filter-group::-webkit-scrollbar-thumb{background:rgba(38,36,31,.12);border-radius:999px;}
+.filter-item{display:flex;align-items:center;gap:8px;background:#fff;border:1px solid var(--border);border-radius:14px;padding:8px 12px;box-shadow:var(--shadow-card);flex:1 1 160px;min-width:140px;max-width:220px;white-space:nowrap;overflow:hidden;text-overflow:ellipsis;}
+.filter-icon{display:inline-flex;align-items:center;justify-content:center;width:24px;height:24px;color:var(--text-dim);}
+.filter-item select{border:none;outline:none;background:transparent;padding:0;margin:0;font-size:13px;font-weight:600;color:var(--text);width:100%;cursor:pointer;appearance:none;-webkit-appearance:none;}
+.filter-group select{background:transparent;border:none;box-shadow:none;}
 
 .status-bar{display:flex;align-items:center;justify-content:space-between;flex-wrap:wrap;gap:12px;background:var(--card);border:1px solid var(--border-soft);border-radius:16px;padding:16px 20px;margin-bottom:20px;box-shadow:var(--shadow-card);}
 .status-bar .left{display:flex;align-items:center;gap:14px;flex-wrap:wrap;}
@@ -352,7 +358,7 @@ table.admin-table tbody tr:hover{background:#FBFAF6;}
 <div id="loginScreen">
   <div class="login-card">
     <div class="brand">
-      <svg width="34" height="34" viewBox="0 0 40 40" fill="none"><rect x="5" y="9" width="14" height="24" rx="3" fill="#E0524F"/><rect x="9" y="13" width="6" height="6" rx="1.5" fill="#fff"/><path d="M19 17h6a3 3 0 013 3v9a2 2 0 002 2v-11l-4-5" stroke="#E0524F" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></svg>
+      <svg width="34" height="34" viewBox="0 0 40 40" fill="none"><rect x="6" y="8" width="28" height="24" rx="4" fill="#2F6FED"/><path d="M14 20h12" stroke="#fff" stroke-width="2" stroke-linecap="round"/><path d="M14 26h8" stroke="#fff" stroke-width="2" stroke-linecap="round"/><path d="M20 14v16" stroke="#fff" stroke-width="2" stroke-linecap="round"/><circle cx="20" cy="10" r="3" fill="#fff"/></svg>
       <div>
         <div class="brand-name"><span class="a1">Libro</span> <span class="a2">de</span> <span class="a3">Carga</span></div>
         <div class="brand-tag">Control Financiero de Estaciones</div>
@@ -376,7 +382,7 @@ table.admin-table tbody tr:hover{background:#FBFAF6;}
   <div class="app-layout">
     <aside class="sidebar" id="sidebar">
       <div class="sidebar-brand">
-        <svg width="30" height="30" viewBox="0 0 40 40" fill="none"><rect x="5" y="9" width="14" height="24" rx="3" fill="#E0524F"/><rect x="9" y="13" width="6" height="6" rx="1.5" fill="#fff"/><path d="M19 17h6a3 3 0 013 3v9a2 2 0 002 2v-11l-4-5" stroke="#E0524F" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></svg>
+        <svg width="30" height="30" viewBox="0 0 40 40" fill="none"><rect x="6" y="8" width="28" height="24" rx="4" fill="#2F6FED"/><path d="M14 20h12" stroke="#fff" stroke-width="2" stroke-linecap="round"/><path d="M14 26h8" stroke="#fff" stroke-width="2" stroke-linecap="round"/><path d="M20 14v16" stroke="#fff" stroke-width="2" stroke-linecap="round"/><circle cx="20" cy="10" r="3" fill="#fff"/></svg>
         <div class="brand-text">
           <div class="brand-name" style="font-size:16.5px;"><span class="a1">Libro</span> <span class="a2">de</span> <span class="a3">Carga</span></div>
           <div class="brand-tag" style="font-size:9.5px;">Control Financiero</div>
@@ -435,6 +441,7 @@ const ICONS = {
   grid: '<svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><rect x="3" y="3" width="8" height="8" rx="1.5"/><rect x="13" y="3" width="8" height="8" rx="1.5"/><rect x="3" y="13" width="8" height="8" rx="1.5"/><rect x="13" y="13" width="8" height="8" rx="1.5"/></svg>',
   file: '<svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M14 3H7a2 2 0 00-2 2v14a2 2 0 002 2h10a2 2 0 002-2V8z"/><path d="M14 3v5h5"/><path d="M9.5 12.5l4 4M13.5 12.5l-4 4"/></svg>',
   chart: '<svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M3 3v18h18"/><rect x="7" y="12" width="3" height="6" rx="0.5"/><rect x="12.5" y="8" width="3" height="10" rx="0.5"/><rect x="18" y="5" width="3" height="13" rx="0.5"/></svg>',
+  finance: '<svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><rect x="5" y="5" width="14" height="14" rx="2"/><path d="M9 9h6"/><path d="M9 13h6"/><path d="M9 17h4"/></svg>',
   checklist: '<svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M9 11l3 3L22 4"/><path d="M21 12v7a2 2 0 01-2 2H5a2 2 0 01-2-2V5a2 2 0 012-2h11"/></svg>',
   users: '<svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><circle cx="9" cy="8" r="3.2"/><path d="M2.5 20c0-3.6 2.9-6.2 6.5-6.2s6.5 2.6 6.5 6.2"/><circle cx="17.5" cy="8.5" r="2.6"/><path d="M15.5 13.6c2.9.3 5 2.6 5 5.7"/></svg>',
   gear: '<svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="3.2"/><path d="M19.4 13.5a1.7 1.7 0 000-3l1.1-1.7-2-2-1.8 1a1.7 1.7 0 00-2.6-1.5L14 4h-3l-.1 2.3a1.7 1.7 0 00-2.6 1.5l-1.8-1-2 2 1.1 1.7a1.7 1.7 0 000 3L3.5 15.7l2 2 1.8-1a1.7 1.7 0 002.6 1.5L10 21h3l.1-2.3a1.7 1.7 0 002.6-1.5l1.8 1 2-2z"/></svg>',
@@ -579,6 +586,7 @@ let filterMes = 'todos';
 let filterAnio = 'todos';
 let filterCargado = 'todos';
 let filterEmpresa = 'todas';
+let filterValidado = 'todos';
 let previewSheetIndex = 0;
 
 function currentPeriodo(){ return selAnio + '-' + String(selMes).padStart(2,'0'); }
@@ -768,34 +776,56 @@ function bindPeriodSelect(idPrefix, onChange){
   document.getElementById(idPrefix+'Mes').addEventListener('change', (e)=>{ selMes=parseInt(e.target.value,10); onChange(); });
   document.getElementById(idPrefix+'Anio').addEventListener('change', (e)=>{ selAnio=parseInt(e.target.value,10); onChange(); });
 }
-function filterSelectHTML(includeCargado = false, includeEmpresa = false){
+function filterSelectHTML(includeCargado = false, includeEmpresa = false, includeValidado = false){
   return `
     <div class="filter-group">
       ${includeEmpresa ? `
-      <select id="filtroEmpresa">
-        <option value="todas" ${filterEmpresa==='todas'?'selected':''}>Todas las empresas</option>
-        ${DB.companies.map(c=>`<option value="${c.id}" ${filterEmpresa===c.id?'selected':''}>${escapeHtml(c.name)}</option>`).join('')}
-      </select>
+      <div class="filter-item">
+        <span class="filter-icon">${ICONS.building}</span>
+        <select id="filtroEmpresa">
+          <option value="todas" ${filterEmpresa==='todas'?'selected':''}>Todas las empresas</option>
+          ${DB.companies.map(c=>`<option value="${c.id}" ${filterEmpresa===c.id?'selected':''}>${escapeHtml(c.name)}</option>`).join('')}
+        </select>
+      </div>
       ` : ''}
       ${includeCargado ? `
-      <select id="filtroCargado">
-        <option value="todos" ${filterCargado==='todos'?'selected':''}>Datos cargados: Todos</option>
-        <option value="si" ${filterCargado==='si'?'selected':''}>Datos cargados: Sí</option>
-        <option value="no" ${filterCargado==='no'?'selected':''}>Datos cargados: No</option>
-      </select>
+      <div class="filter-item">
+        <span class="filter-icon">${ICONS.upload}</span>
+        <select id="filtroCargado">
+          <option value="todos" ${filterCargado==='todos'?'selected':''}>Cargados: Todos</option>
+          <option value="si" ${filterCargado==='si'?'selected':''}>Cargados: Sí</option>
+          <option value="no" ${filterCargado==='no'?'selected':''}>Cargados: No</option>
+        </select>
+      </div>
       ` : ''}
-      <select id="filtroMes">
-        <option value="todos" ${filterMes==='todos'?'selected':''}>Todos los meses</option>
-        ${MESES.map((m,i)=>`<option value="${i+1}" ${filterMes==(i+1)?'selected':''}>${m}</option>`).join('')}
-      </select>
-      <select id="filtroAnio">
-        <option value="todos" ${filterAnio==='todos'?'selected':''}>Todos los años</option>
-        ${yearsInSystem().map(y=>`<option value="${y}" ${filterAnio==y?'selected':''}>${y}</option>`).join('')}
-      </select>
+      ${includeValidado ? `
+      <div class="filter-item">
+        <span class="filter-icon">${ICONS.finance}</span>
+        <select id="filtroValidado">
+          <option value="todos" ${filterValidado==='todos'?'selected':''}>Validación: Todos</option>
+          <option value="validado" ${filterValidado==='validado'?'selected':''}>Validado</option>
+          <option value="no" ${filterValidado==='no'?'selected':''}>No validado</option>
+        </select>
+      </div>
+      ` : ''}
+      <div class="filter-item">
+        <span class="filter-icon">${ICONS.clock}</span>
+        <select id="filtroMes">
+          <option value="todos" ${filterMes==='todos'?'selected':''}>Mes: Todos</option>
+          ${MESES.map((m,i)=>`<option value="${i+1}" ${filterMes==(i+1)?'selected':''}>${m}</option>`).join('')}
+        </select>
+      </div>
+      <div class="filter-item">
+        <span class="filter-icon">${ICONS.chart}</span>
+        <select id="filtroAnio">
+          <option value="todos" ${filterAnio==='todos'?'selected':''}>Año: Todos</option>
+          ${yearsInSystem().map(y=>`<option value="${y}" ${filterAnio==y?'selected':''}>${y}</option>`).join('')}
+        </select>
+      </div>
     </div>
   `;
 }
-function bindFilterSelect(onChange, includeCargado = false, includeEmpresa = false){
+function bindFilterSelect(onChange, includeCargado = false, includeEmpresa = false, includeValidado = false){
   if(includeEmpresa){
     const fe = document.getElementById('filtroEmpresa');
     if(fe) fe.addEventListener('change', (e)=>{ filterEmpresa = e.target.value; onChange(); });
@@ -803,6 +833,10 @@ function bindFilterSelect(onChange, includeCargado = false, includeEmpresa = fal
   if(includeCargado){
     const fc = document.getElementById('filtroCargado');
     if(fc) fc.addEventListener('change', (e)=>{ filterCargado = e.target.value; onChange(); });
+  }
+  if(includeValidado){
+    const fv = document.getElementById('filtroValidado');
+    if(fv) fv.addEventListener('change', (e)=>{ filterValidado = e.target.value; onChange(); });
   }
   const fm = document.getElementById('filtroMes');
   if(fm) fm.addEventListener('change',(e)=>{ filterMes = e.target.value==='todos'?'todos':parseInt(e.target.value,10); onChange(); });
@@ -1301,7 +1335,7 @@ function renderAdminReportes(){
   const periodosList = Array.from(periodosSet).filter(matchesFilter).sort().reverse();
 
   main.innerHTML = `
-    <div class="panel-header"><div><div class="panel-title">Reportes de Empresas</div><div class="panel-sub">Filtra por empresa, estado de datos cargados, mes y año.</div></div>${filterSelectHTML(true, true)}</div>
+    <div class="panel-header"><div><div class="panel-title">Reportes de Empresas</div><div class="panel-sub">Filtra por empresa, estado de datos cargados, validación, mes y año.</div></div>${filterSelectHTML(true, true, true)}</div>
     <div class="admin-table-wrap">
       <div class="thead-row"><h3>Estado de reportes</h3></div>
       <table class="admin-table">
@@ -1310,7 +1344,7 @@ function renderAdminReportes(){
       </table>
     </div>
   `;
-  bindFilterSelect(()=>renderAdminReportes(), true, true);
+  bindFilterSelect(()=>renderAdminReportes(), true, true, true);
 
   const tbody = document.getElementById('adminRows');
   let anyRow=false;
@@ -1320,12 +1354,15 @@ function renderAdminReportes(){
     const periodosEmpresa = periodosList.length ? periodosList : [currentPeriodo()];
     periodosEmpresa.forEach(p=>{
       const rep = getReport(c.id, p, false);
+      const status = rep ? (rep.status || 'borrador') : 'borrador';
       const isLoaded = !!(rep && (rep.status !== 'borrador' || rep.file));
       if(filterCargado === 'si' && !isLoaded) return;
       if(filterCargado === 'no' && isLoaded) return;
+      if(filterValidado === 'validado' && status !== 'validado') return;
+      if(filterValidado === 'no' && status === 'validado') return;
 
       if((filterMes!=='todos' || filterAnio!=='todos') && !rep) return;
-      if(filterMes==='todos' && filterAnio==='todos' && filterCargado==='todos' && filterEmpresa==='todas' && !rep && p!==currentPeriodo()) return;
+      if(filterMes==='todos' && filterAnio==='todos' && filterCargado==='todos' && filterEmpresa==='todas' && filterValidado==='todos' && !rep && p!==currentPeriodo()) return;
       anyRow = true;
       const r = rep || blankReport(c.id, p);
       const ext = r.file ? getFileExt(r.file.name) : '';
@@ -1479,7 +1516,7 @@ function renderAdminChecklist(){
         <div class="panel-title">Checklist de Cumplimiento (Control de Carga)</div>
         <div class="panel-sub">Verificación de recepción de reportes Excel y validaciones para ${periodoLabel(p)}.</div>
       </div>
-      ${periodSelectHTML('check')}
+      ${filterSelectHTML(true, true, true)}
     </div>
 
     <div class="kpi-row">
@@ -1508,6 +1545,7 @@ function renderAdminChecklist(){
     </div>
   `;
 
+  bindFilterSelect(()=>renderAdminChecklist(), true, true, true);
   bindPeriodSelect('check', ()=>{ renderAdminChecklist(); });
 
   const tbody = document.getElementById('checklistRows');
