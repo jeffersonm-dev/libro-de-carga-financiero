@@ -159,6 +159,57 @@ svg{display:block;}
 .welcome-hero p{color:var(--text-dim);font-size:14px;max-width:560px;line-height:1.6;}
 .welcome-shortcuts{display:flex;gap:10px;margin-top:20px;flex-wrap:wrap;}
 
+.report-overview-card{background:linear-gradient(135deg, #FFFFFF 0%, #F7FAFF 100%);border:1px solid #ECE8DE;border-radius:24px;padding:24px;box-shadow:0 20px 50px -24px rgba(38,36,31,.28);margin-bottom:22px;position:relative;overflow:hidden;}
+.report-overview-card::before{content:'';position:absolute;inset:0 auto 0 0;width:7px;background:linear-gradient(180deg, var(--blue), var(--green));}
+.report-overview-card .overview-top{display:flex;align-items:flex-start;justify-content:space-between;gap:16px;flex-wrap:wrap;}
+.report-overview-card .overview-badge{display:inline-flex;align-items:center;gap:7px;padding:6px 10px;border-radius:999px;background:linear-gradient(90deg, var(--blue-soft), #F0F7EA);color:var(--blue);font-size:11px;font-weight:700;text-transform:uppercase;letter-spacing:.04em;margin-bottom:10px;}
+.report-overview-card h3{font-family:var(--font-display);font-size:18px;margin-bottom:8px;}
+.report-overview-card p{color:var(--text-dim);font-size:13.6px;line-height:1.65;max-width:720px;}
+.report-overview-card .overview-graphic{display:flex;flex-direction:column;gap:10px;min-width:260px;background:#FFFFFF;border:1px solid #ECE8DE;border-radius:16px;padding:14px 14px 12px;box-shadow:inset 0 1px 0 rgba(255,255,255,.8);}
+.report-overview-card .overview-graphic .bar{height:9px;border-radius:999px;background:#EEF2F7;overflow:hidden;}
+.report-overview-card .overview-graphic .bar span{display:block;height:100%;border-radius:999px;background:linear-gradient(90deg, var(--blue), var(--green));}
+.report-overview-card .overview-graphic .value{font-size:12px;font-weight:700;color:var(--text-dim);display:flex;justify-content:space-between;align-items:center;gap:8px;}
+.report-overview-card .overview-metrics{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:12px;margin-top:16px;width:100%;}
+.report-overview-card .metric-card{background:rgba(255,255,255,.78);border:1px solid #ECE8DE;border-radius:14px;padding:12px 13px;backdrop-filter:blur(6px);}
+.report-overview-card .metric-card .metric-label{font-size:10.8px;text-transform:uppercase;letter-spacing:.06em;color:var(--text-faint);font-weight:700;}
+.report-overview-card .metric-card .metric-value{font-family:var(--font-display);font-size:18px;font-weight:700;margin-top:4px;color:var(--text);}
+.report-overview-card .metric-card .metric-foot{font-size:11px;color:var(--text-dim);margin-top:3px;}
+.report-overview-grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(260px,1fr));gap:16px;margin-bottom:20px;}
+.report-overview-section{background:linear-gradient(135deg, #FFFFFF 0%, #FCFBF7 100%);border:1px solid #ECE8DE;border-radius:18px;padding:16px;box-shadow:0 14px 36px -22px rgba(38,36,31,.22);position:relative;overflow:hidden;}
+.report-overview-section::before{content:'';position:absolute;left:0;right:0;top:0;height:4px;background:linear-gradient(90deg, var(--blue), var(--orange));}
+.report-overview-section h4{display:flex;align-items:center;justify-content:space-between;gap:10px;font-size:14.5px;font-weight:700;margin-bottom:10px;}
+.report-overview-section .section-chip{font-size:11px;font-weight:700;color:var(--text-dim);background:#F4F1EA;padding:4px 8px;border-radius:999px;border:1px solid #ECE8DE;}
+.report-overview-section .section-progress{height:8px;border-radius:999px;background:#F2EFE8;overflow:hidden;margin-bottom:10px;}
+.report-overview-section .section-progress span{display:block;height:100%;border-radius:999px;background:linear-gradient(90deg, var(--blue), var(--green));}
+.report-overview-section ul{display:flex;flex-direction:column;gap:9px;list-style:none;}
+.report-overview-section li{display:flex;align-items:flex-start;gap:10px;background:linear-gradient(90deg, #F8F7F2 0%, #FCFBF7 100%);border:1px solid #EEE9DE;border-radius:13px;padding:10px 11px;}
+.report-overview-section li b{display:block;font-size:13px;color:var(--text);margin-bottom:2px;}
+.report-overview-section li span{font-size:12.3px;color:var(--text-dim);line-height:1.4;}
+.report-company-list{display:flex;flex-direction:column;gap:10px;margin-top:12px;}
+.report-company-card{background:linear-gradient(90deg, #F8F7F2 0%, #FCFBF7 100%);border:1px solid #EEE9DE;border-radius:14px;padding:12px 13px;display:flex;justify-content:space-between;align-items:center;gap:12px;flex-wrap:wrap;}
+.report-company-card .company-main{display:flex;align-items:center;gap:10px;flex:1;min-width:220px;}
+.report-company-card .company-dot{width:10px;height:10px;border-radius:50%;background:var(--blue);flex-shrink:0;}
+.report-company-card .company-name{font-weight:700;font-size:13.5px;color:var(--text);} 
+.report-company-card .company-meta{font-size:12px;color:var(--text-dim);margin-top:2px;}
+.report-company-card .company-state{display:flex;align-items:center;gap:8px;flex-wrap:wrap;}
+.report-company-card .company-pill{display:inline-flex;align-items:center;gap:6px;padding:4px 8px;border-radius:999px;font-size:10.5px;font-weight:700;text-transform:uppercase;letter-spacing:.04em;}
+.report-company-card .company-pill.validado{background:var(--green-soft);color:var(--green);} 
+.report-company-card .company-pill.cargado{background:var(--orange-soft);color:var(--orange);} 
+.report-company-card .company-pill.borrador{background:#F2EFE8;color:var(--text-dim);} 
+.report-company-card .company-summary-grid{display:grid;grid-template-columns:repeat(5, minmax(100px, 1fr));gap:8px;width:100%;margin-top:8px;}
+.report-company-card .company-summary-item{background:#fff;border:1px solid #EEE9DE;border-radius:10px;padding:8px 9px;display:flex;flex-direction:column;gap:3px;min-width:0;}
+.report-company-card .company-summary-item span{font-size:10.5px;color:var(--text-dim);text-transform:uppercase;letter-spacing:.04em;}
+.report-company-card .company-summary-item strong{font-size:12.5px;color:var(--text);white-space:nowrap;overflow:hidden;text-overflow:ellipsis;}
+.report-company-card .company-empty{font-size:12px;color:var(--text-dim);margin-top:8px;width:100%;}
+.report-status-pill{display:inline-flex;align-items:center;justify-content:center;padding:4px 8px;border-radius:999px;font-size:10.5px;font-weight:700;letter-spacing:.04em;text-transform:uppercase;flex-shrink:0;}
+.report-status-pill.ok{background:var(--green-soft);color:var(--green);} 
+.report-status-pill.warn{background:var(--orange-soft);color:var(--orange);} 
+.report-status-pill.info{background:var(--blue-soft);color:var(--blue);} 
+.report-overview-section .overview-dot{width:9px;height:9px;border-radius:50%;margin-top:6px;flex-shrink:0;}
+.report-overview-section .overview-dot.ok{background:var(--green);} 
+.report-overview-section .overview-dot.warn{background:var(--orange);} 
+.report-overview-section .overview-dot.info{background:var(--blue);} 
+
 .grid-cards{display:grid;grid-template-columns:repeat(auto-fit,minmax(230px,1fr));gap:16px;margin-bottom:24px;}
 .mini-card{background:var(--card);border:1px solid var(--border-soft);border-radius:16px;padding:20px;box-shadow:var(--shadow-card);cursor:pointer;transition:transform .12s, box-shadow .12s;}
 .mini-card:hover{transform:translateY(-2px);box-shadow:0 20px 40px -18px rgba(38,36,31,.18);}
@@ -643,7 +694,8 @@ function navConfig(role){
     return [
       { section:'General', items:[
         {key:'bienvenida', label:'Bienvenida', icon:ICONS.wave},
-        {key:'dashboard', label:'Dashboard Principal', icon:ICONS.grid}
+        {key:'dashboard', label:'Dashboard Principal', icon:ICONS.grid},
+        {key:'reporte_general', label:'Reporte General', icon:ICONS.chart}
       ]},
       { section:'Monitoreo y Control', items:[
         {key:'checklist', label:'Checklist de Cumplimiento', icon:ICONS.checklist},
@@ -658,10 +710,8 @@ function navConfig(role){
   return [
     { section:'General', items:[
       {key:'bienvenida', label:'Bienvenida', icon:ICONS.wave},
-      {key:'dashboard', label:'Dashboard Principal', icon:ICONS.grid}
-    ]},
-    { section:'Informes', items:[
-      {key:'reporte', label:'Reporte Financiero', icon:ICONS.file},
+      {key:'dashboard', label:'Dashboard Principal', icon:ICONS.grid},
+      {key:'reporte_general', label:'Reporte General', icon:ICONS.chart},
       {key:'checklist_empresa', label:'Checklist de Envíos', icon:ICONS.checklist},
       {key:'historial', label:'Historial de Reportes', icon:ICONS.chart}
     ]},
@@ -716,6 +766,7 @@ function renderPage(){
     document.getElementById('topbarContext').innerHTML = 'Panel de <b>Administración General</b>';
     if(currentPage==='bienvenida') return renderAdminBienvenida();
     if(currentPage==='dashboard') return renderAdminDashboard();
+    if(currentPage==='reporte_general') return renderReporteGeneral();
     if(currentPage==='checklist') return renderAdminChecklist();
     if(currentPage==='reportes') return adminDetailTarget ? renderAdminDetail() : renderAdminReportes();
     if(currentPage==='empresas') return renderAdminEmpresas();
@@ -726,6 +777,7 @@ function renderPage(){
     document.getElementById('topbarContext').innerHTML = 'Empresa: <b>' + escapeHtml(c?c.name:'—') + '</b>';
     if(currentPage==='bienvenida') return renderEmpresaBienvenida();
     if(currentPage==='dashboard') return renderEmpresaDashboard();
+    if(currentPage==='reporte_general') return renderReporteGeneral();
     if(currentPage==='reporte') return renderReporteFinanciero();
     if(currentPage==='checklist_empresa') return renderEmpresaChecklist();
     if(currentPage==='config') return renderEmpresaConfig();
@@ -878,6 +930,16 @@ function handleFileUpload(file, report, onDone){
     const base64 = arrayBufferToBase64(reader.result);
     const user = currentUser();
     report.file = { name:file.name, mime:file.type||'application/octet-stream', size:file.size, base64, uploadedAt:Date.now(), uploadedBy:user.name };
+    try{
+      const workbook = parseWorkbookFromBase64(base64);
+      const parsedSummary = extractFinancialSummaryFromWorkbook(workbook);
+      if(parsedSummary){
+        report.resumen = { ...(report.resumen || { totalIngresos:'', totalGastos:'', totalCostos:'', saldoBancoCaja:'' }), ...Object.fromEntries(Object.entries(parsedSummary).map(([k,v]) => [k, String(v)])) };
+        if(!report.resumen.flujoNeto && report.resumen.totalIngresos !== '' && report.resumen.totalGastos !== '' && report.resumen.totalCostos !== ''){
+          report.resumen.flujoNeto = String(parseFloat(report.resumen.totalIngresos) - parseFloat(report.resumen.totalGastos) - parseFloat(report.resumen.totalCostos));
+        }
+      }
+    } catch(e){ console.warn('No se pudo extraer el resumen del Excel', e); }
     saveDB(DB); previewSheetIndex=0;
     showToast('Archivo "'+file.name+'" cargado correctamente.');
     if(onDone) onDone();
@@ -947,6 +1009,160 @@ function renderFileArea(containerId, report, locked, onChange){
 /* =========================================================================
    EMPRESA · BIENVENIDA
    ========================================================================= */
+function renderReporteGeneral(){
+  const user = currentUser();
+  const company = user.role !== 'admin' ? companyOf(user.companyId) : null;
+  const main = document.getElementById('mainArea');
+  const secciones = [
+    {
+      titulo:'Inicio y acceso',
+      items:[
+        ['Autenticación de usuarios', 'ok', 'Login con roles Empresa y Super Administrador.'],
+        ['Credenciales base', 'ok', 'Cuentas de prueba cargadas al iniciar el sistema.'],
+        ['Vista de bienvenida', 'ok', 'Pantalla inicial con acceso rápido a módulos principales.']
+      ]
+    },
+    {
+      titulo:'Carga de reportes',
+      items:[
+        ['Subida de Excel/CSV', 'ok', 'Soporte para archivos .xlsx, .xls, .xlsm y .csv.'],
+        ['Vista previa de hojas', 'ok', 'Lectura interactiva del contenido en el navegador.'],
+        ['Resumen financiero', 'ok', 'Ingresos, gastos, costos y saldo en caja.']
+      ]
+    },
+    {
+      titulo:'Monitoreo y validación',
+      items:[
+        ['Checklist mensual', 'ok', 'Seguimiento del estado de cada empresa por período.'],
+        ['Validación de reportes', 'ok', 'Aprobación o devolución a borrador desde administración.'],
+        ['Dashboard visual', 'ok', 'Indicadores y barras de cumplimiento por empresa.']
+      ]
+    },
+    {
+      titulo:'Gestión administrativa',
+      items:[
+        ['Empresas registradas', 'ok', 'Alta, edición y eliminación de empresas desde el panel admin.'],
+        ['Usuarios y accesos', 'ok', 'Creación de cuentas y asociación con empresas.'],
+        ['Historial y configuración', 'warn', 'Se conserva el estado histórico y los datos del usuario.']
+      ]
+    }
+  ];
+
+  main.innerHTML = `
+    <div class="panel-header">
+      <div>
+        <div class="panel-title">Reporte General del Sistema</div>
+        <div class="panel-sub">Vista resumida de los módulos, flujos y estados clave del aplicativo.</div>
+      </div>
+      <div style="display:flex;gap:8px;flex-wrap:wrap;">
+        <button class="btn btn-primary btn-sm" id="exportGeneralExcelBtn">⬇ Exportar general</button>
+      </div>
+    </div>
+    <div class="report-overview-card">
+      <div class="overview-top">
+        <div>
+          <div class="overview-badge">● Panel visual ejecutivo</div>
+          <h3>${user.role === 'admin' ? 'Resumen ejecutivo de administración' : 'Resumen ejecutivo para ' + escapeHtml(company ? company.name : 'la empresa')}</h3>
+          <p>Este módulo consolida el alcance del sistema en una vista más clara y elegante: autenticación, carga de reportes, supervisión mensual, validación y administración de empresas.</p>
+        </div>
+        <div class="overview-graphic">
+          <div class="bar"><span style="width:82%"></span></div>
+          <div class="value"><span>Progreso general</span><b>82% listo</b></div>
+        </div>
+      </div>
+      <div class="overview-metrics">
+        <div class="metric-card">
+          <div class="metric-label">Módulos activos</div>
+          <div class="metric-value">4</div>
+          <div class="metric-foot">Flujos principales</div>
+        </div>
+        <div class="metric-card">
+          <div class="metric-label">Cobertura</div>
+          <div class="metric-value">100%</div>
+          <div class="metric-foot">Usuarios y empresas</div>
+        </div>
+        <div class="metric-card">
+          <div class="metric-label">Estado</div>
+          <div class="metric-value">En control</div>
+          <div class="metric-foot">Seguimiento mensual</div>
+        </div>
+      </div>
+    </div>
+    <div class="report-overview-grid">
+      ${secciones.map(sec => {
+        const okCount = sec.items.filter(i => i[1] === 'ok').length;
+        const pct = Math.round((okCount / sec.items.length) * 100);
+        return `
+          <div class="report-overview-section">
+            <h4>
+              <span>${escapeHtml(sec.titulo)}</span>
+              <span class="section-chip">${pct}% listo</span>
+            </h4>
+            <div class="section-progress"><span style="width:${pct}%"></span></div>
+            <ul>
+              ${sec.items.map(item => `
+                <li>
+                  <span class="overview-dot ${item[1]}"></span>
+                  <div>
+                    <b>${escapeHtml(item[0])}</b>
+                    <span>${escapeHtml(item[2])}</span>
+                  </div>
+                </li>
+              `).join('')}
+            </ul>
+          </div>
+        `;
+      }).join('')}
+    </div>
+    <div class="report-overview-section" style="margin-top:4px;">
+      <h4>
+        <span>Resumen por empresa</span>
+        <span class="section-chip">${DB.companies.length} empresas</span>
+      </h4>
+      <div class="report-company-list">
+        ${DB.companies.map(c => {
+          const r = getReport(c.id, currentPeriodo(), false);
+          const estado = r?.status === 'validado' ? 'validado' : (r?.status === 'cargado' ? 'cargado' : 'borrador');
+          const nombreEstado = estado === 'validado' ? 'Validado' : (estado === 'cargado' ? 'Cargado' : 'Borrador');
+          const resumen = r?.resumen || {};
+          const flujoNeto = resumen.flujoNeto !== undefined ? parseFloat(resumen.flujoNeto) : (parseFloat(resumen.totalIngresos || 0) - parseFloat(resumen.totalGastos || 0) - parseFloat(resumen.totalCostos || 0));
+          const hasSummary = !!(resumen.totalIngresos || resumen.totalGastos || resumen.totalCostos || resumen.saldoBancoCaja);
+          return `
+            <div class="report-company-card">
+              <div class="company-main">
+                <span class="company-dot"></span>
+                <div>
+                  <div class="company-name">${escapeHtml(c.name)}</div>
+                  <div class="company-meta">${r ? 'Período ' + periodoLabel(r.periodo) : 'Sin reporte cargado aún'}</div>
+                </div>
+              </div>
+              <div class="company-state">
+                <span class="company-pill ${estado}">${nombreEstado}</span>
+                <span class="company-meta">${r?.file ? 'Archivo adjunto' : 'Sin archivo'}</span>
+              </div>
+              <div style="display:flex;justify-content:flex-end;gap:8px;margin-top:8px;width:100%;">
+                <button class="btn btn-ghost btn-sm export-company-btn" data-company-id="${c.id}">⬇ Exportar empresa</button>
+              </div>
+              <div class="company-summary-grid">
+                <div class="company-summary-item"><span>Ingresos</span><strong>$ ${fmt(resumen.totalIngresos || 0)}</strong></div>
+                <div class="company-summary-item"><span>Costos</span><strong>$ ${fmt(resumen.totalCostos || 0)}</strong></div>
+                <div class="company-summary-item"><span>Gastos</span><strong>$ ${fmt(resumen.totalGastos || 0)}</strong></div>
+                <div class="company-summary-item"><span>Saldo</span><strong>$ ${fmt(resumen.saldoBancoCaja || 0)}</strong></div>
+                <div class="company-summary-item"><span>Flujo neto</span><strong>$ ${fmt(flujoNeto || 0)}</strong></div>
+              </div>
+              ${!hasSummary ? `<div class="company-empty">Sin resumen financiero extraído del Excel cargado.</div>` : ''}
+            </div>
+          `;
+        }).join('')}
+      </div>
+    </div>
+  `;
+  document.getElementById('exportGeneralExcelBtn')?.addEventListener('click', exportGeneralReportExcel);
+  document.querySelectorAll('.export-company-btn').forEach(btn => {
+    btn.addEventListener('click', () => exportCompanyReportExcel(btn.dataset.companyId));
+  });
+}
+
 function renderEmpresaBienvenida(){
   const user = currentUser();
   const company = companyOf(user.companyId);
@@ -960,6 +1176,7 @@ function renderEmpresaBienvenida(){
       <div class="welcome-shortcuts">
         <button class="btn btn-primary" style="width:auto;margin-top:0;" id="goReporte">Ir a Reporte Financiero</button>
         <button class="btn btn-ghost" id="goHistorial">Ver historial</button>
+        <button class="btn btn-ghost" id="goGeneral">Ver reporte general</button>
       </div>
     </div>
     <div class="grid-cards">
@@ -982,6 +1199,7 @@ function renderEmpresaBienvenida(){
   `;
   document.getElementById('goReporte').addEventListener('click', ()=>goTo('reporte'));
   document.getElementById('goHistorial').addEventListener('click', ()=>goTo('historial'));
+  document.getElementById('goGeneral').addEventListener('click', ()=>goTo('reporte_general'));
   document.getElementById('cardEstado').addEventListener('click', ()=>goTo('reporte'));
   document.getElementById('cardHistorial').addEventListener('click', ()=>goTo('historial'));
   document.getElementById('cardConfig').addEventListener('click', ()=>goTo('config'));
@@ -1242,6 +1460,7 @@ function renderAdminBienvenida(){
       <div class="welcome-shortcuts">
         <button class="btn btn-primary" style="width:auto;margin-top:0;" id="goReportes">Ver reportes de empresas</button>
         <button class="btn btn-ghost" id="goEmpresas">Gestionar empresas</button>
+        <button class="btn btn-ghost" id="goGeneralAdmin">Ver reporte general</button>
       </div>
     </div>
     <div class="grid-cards">
@@ -1252,6 +1471,7 @@ function renderAdminBienvenida(){
   `;
   document.getElementById('goReportes').addEventListener('click', ()=>goTo('reportes'));
   document.getElementById('goEmpresas').addEventListener('click', ()=>goTo('empresas'));
+  document.getElementById('goGeneralAdmin').addEventListener('click', ()=>goTo('reporte_general'));
   document.getElementById('c1').addEventListener('click', ()=>goTo('empresas'));
   document.getElementById('c2').addEventListener('click', ()=>goTo('reportes'));
   document.getElementById('c3').addEventListener('click', ()=>goTo('empresas'));
